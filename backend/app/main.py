@@ -1,8 +1,10 @@
 import json
 import os
+import traceback
 
 import boto3
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 from app.rag import KB
@@ -12,6 +14,17 @@ app = FastAPI(
     version="0.1.0",
     description="A starter FastAPI backend for CSIry.",
 )
+
+# Fixes the 405 on the browser's OPTIONS preflight request.
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Load the knowledge base once at startup instead of on every request.
+kb = KB()
 
 
 class Item(BaseModel):
@@ -59,11 +72,14 @@ def create_item(item: Item) -> dict[str, object]:
 
 @app.post("/chat")
 def chat_with_rag(payload: ChatRequest) -> dict[str, object]:
-    if payload.messages:
-        chat_messages = [{"role": msg.role, "content": msg.content} for msg in payload.messages]
-    elif payload.message:
-        chat_messages = [{"role": "user", "content": payload.message}]
-    else:
+    # The frontend sends prior history in `messages` and the new turn in `message`,
+    # so combine them (history first, then the new message).
+    chat_messages = [
+        {"role": m.role, "content": m.content} for m in (payload.messages or [])
+    ]
+    if payload.message:
+        chat_messages.append({"role": "user", "content": payload.message})
+    if not chat_messages:
         raise HTTPException(status_code=400, detail="Either 'message' or 'messages' must be provided.")
 
     last_user_message = next(
@@ -84,12 +100,12 @@ def chat_with_rag(payload: ChatRequest) -> dict[str, object]:
         )
 
     rag_context = None
-    rag_result = None
     try:
-        kb = KB()
         rag_result = kb.ask(last_user_message)
         rag_context = rag_result.get("answer")
     except Exception:
+        # Don't fail the whole chat if retrieval breaks, but make it visible.
+        traceback.print_exc()
         rag_context = None
 
     llm_messages: list[dict[str, str]] = []
@@ -107,9 +123,7 @@ def chat_with_rag(payload: ChatRequest) -> dict[str, object]:
     llm_messages.extend(chat_messages)
 
     try:
-        if os.getenv("AWS_BEARER_TOKEN_BEDROCK") or (
-            os.getenv("AWS_ACCESS_KEY_ID") and os.getenv("AWS_SECRET_ACCESS_KEY")
-        ):
+        if bedrock_auth:
             session_kwargs = {}
             if os.getenv("AWS_PROFILE"):
                 session_kwargs["profile_name"] = os.getenv("AWS_PROFILE")

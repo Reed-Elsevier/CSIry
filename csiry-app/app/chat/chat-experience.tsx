@@ -9,35 +9,88 @@ type Message = {
   content: string;
 };
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://15.135.72.99:8000";
+
 const suggestions = [
   "How do I process a vendor onboarding request?",
   "Which searches returned no results this month?",
   "What are the open action items from last week's meetings?",
 ];
 
+// The 200 response schema is a generic object, so pull the reply text
+// defensively. Adjust this once you know the real field name.
+function extractReply(data: unknown): string {
+  if (typeof data === "string") return data;
+  if (data && typeof data === "object") {
+    const record = data as Record<string, unknown>;
+    for (const key of ["response", "answer", "reply", "message", "content"]) {
+      if (typeof record[key] === "string") return record[key] as string;
+    }
+  }
+  return JSON.stringify(data);
+}
+
+async function requestChat(
+  message: string,
+  history: Message[],
+): Promise<string> {
+  const response = await fetch(`${API_BASE_URL}/chat`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      message,
+      messages: history.map(({ role, content }) => ({ role, content })),
+    }),
+  });
+
+  if (response.status === 422) {
+    throw new Error("The request was rejected. Check the message and try again.");
+  }
+  if (!response.ok) {
+    throw new Error(`The service returned an error (${response.status}).`);
+  }
+
+  return extractReply(await response.json());
+}
+
 export function ChatExperience() {
   const [draft, setDraft] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  function sendMessage(event: FormEvent<HTMLFormElement>) {
+  async function sendMessage(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const content = draft.trim();
 
-    if (!content) {
+    if (!content || isLoading) {
       return;
     }
+
+    // History sent to the API is everything before this new message.
+    const history = messages;
 
     setMessages((currentMessages) => [
       ...currentMessages,
       { id: crypto.randomUUID(), role: "user", content },
-      {
-        id: crypto.randomUUID(),
-        role: "assistant",
-        content:
-          "This chat preview isn't connected to an AI service yet. Your message is ready for when one is connected.",
-      },
     ]);
     setDraft("");
+    setIsLoading(true);
+
+    let reply: string;
+    try {
+      reply = await requestChat(content, history);
+    } catch (error) {
+      reply =
+        error instanceof Error
+          ? `Couldn't get a reply. ${error.message}`
+          : "Couldn't get a reply. Try again.";
+    }
+
+    setMessages((currentMessages) => [
+      ...currentMessages,
+      { id: crypto.randomUUID(), role: "assistant", content: reply },
+    ]);
+    setIsLoading(false);
   }
 
   return (
@@ -96,6 +149,24 @@ export function ChatExperience() {
                 </div>
               ))
             )}
+
+            {isLoading && (
+              <div className="chat-message chat-message-assistant">
+                <span
+                  className="chat-avatar chat-avatar-small"
+                  aria-hidden="true"
+                >
+                  <span />
+                  <span />
+                  <span />
+                  <span />
+                </span>
+                <div className="chat-message-body">
+                  <p className="chat-message-label">LAPLACE</p>
+                  <p className="chat-message-content">Searching your knowledge base...</p>
+                </div>
+              </div>
+            )}
           </div>
 
           {messages.length === 0 && (
@@ -135,7 +206,7 @@ export function ChatExperience() {
             <button
               aria-label="Send message"
               className="chat-send"
-              disabled={!draft.trim()}
+              disabled={!draft.trim() || isLoading}
               type="submit"
             >
               <span aria-hidden="true">↑</span>
