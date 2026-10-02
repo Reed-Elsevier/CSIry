@@ -4,7 +4,7 @@ import { SiteHeader } from "./components/site-header";
 const features = [
   {
     id: "chat",
-    title: "Chat with Laplace",
+    title: "Chat with",
     description:
       "Ask about SOPs, articles, meetings, and project decisions. Every answer comes with its sources.",
     action: "Ask a question",
@@ -20,7 +20,7 @@ export default function Home() {
         <h1 id="hero-title">
           See Clearly.
           <br />
-          <span>Laplace.</span>
+          <span className="laplace-accent">Laplace.</span>
         </h1>
         <p className="hero-copy">
           Find answers, not documents. Your company&apos;s knowledge, one
@@ -37,7 +37,9 @@ export default function Home() {
               id={feature.id}
               key={feature.id}
             >
-              <span className="card-title">{feature.title}</span>
+              <span className="card-title">
+                {feature.title} <span className="laplace-accent">Laplace</span>
+              </span>
               <span className="card-description">{feature.description}</span>
               <span className="card-action">
                 {feature.action}
