@@ -1,0 +1,144 @@
+Found 10 parquet files in C:\Users\coj3\CSIry\backend\data
+
+======================================================================
+action_items  rows=30,000  cols=7
+======================================================================
+- action_item_id               str              nulls=0       unique=30000    e.g. AI0000001
+- meeting_id                   str              nulls=0       unique=10991    e.g. MTG007035
+- owner_employee_id            str              nulls=0       unique=4836     e.g. EMP004381
+- description                  str              nulls=0       unique=245      e.g. Review access request
+- due_date                     datetime64[ns]   nulls=0       unique=1750     e.g. 2026-10-06 00:00:00
+- completed_at                 datetime64[ns]   nulls=4622    unique=25378    e.g. 2024-05-19 06:11:57.840250560
+- status                       str              nulls=0       unique=3        e.g. Open
+  values of status: {'Done': 25378, 'Overdue': 4487, 'Open': 135}
+
+======================================================================
+chat_channels  rows=399  cols=5
+======================================================================
+- channel_id                   str              nulls=0       unique=399      e.g. CH00001
+- team_id                      str              nulls=0       unique=120      e.g. TM0001
+- project_id                   string           nulls=120     unique=279      e.g. PRJ000020
+- channel_name                 str              nulls=0       unique=399      e.g. general-tm0001
+- created_at                   datetime64[ns]   nulls=0       unique=398      e.g. 2021-05-27 17:12:12
+
+======================================================================
+chat_messages  rows=300,000  cols=8
+======================================================================
+- message_id                   str              nulls=0       unique=300000   e.g. MSG00000001
+- channel_id                   str              nulls=0       unique=399      e.g. CH00199
+- sender_employee_id           str              nulls=0       unique=4947     e.g. EMP002398
+- sent_at                      datetime64[ns]   nulls=0       unique=299140   e.g. 2022-01-01 00:00:00
+- message_text                 str              nulls=0       unique=2812     e.g. QA found 3 defects in batch TKT0020672
+- is_taglish                   bool             nulls=0       unique=2        e.g. False
+- reply_to_message_id          str              nulls=210454  unique=89546    e.g. MSG00000001
+- mentions_count               int64            nulls=0       unique=5        e.g. 0
+  values of is_taglish: {False: 255147, True: 44853}
+  values of mentions_count: {0: 222510, 1: 66508, 2: 9880, 3: 1023, 4: 79}
+
+======================================================================
+documents  rows=8,000  cols=7
+======================================================================
+- document_id                  str              nulls=0       unique=8000     e.g. DOC000001
+- project_id                   str              nulls=0       unique=3482     e.g. PRJ003688
+- doc_type                     str              nulls=0       unique=7        e.g. Benefits Realisation Report
+- author_employee_id           str              nulls=0       unique=921      e.g. EMP003563
+- created_at                   datetime64[ns]   nulls=0       unique=7805     e.g. 2024-03-14 17:21:28.791788698
+- title                        str              nulls=0       unique=6487     e.g. Benefits Realisation Report - Horizon - Automation 1
+- body                         str              nulls=0       unique=7991     e.g. Benefits Realisation Report for Horizon - Automation 1. Context: reduce manual e...  [LONG TEXT, avg 232 chars]
+  values of doc_type: {'Status Report': 1184, 'Architecture Decision Record': 1177, 'Closeout Report': 1164, 'Requirements': 1143, 'Decision Log': 1140, 'Project Charter': 1111, 'Benefits Realisation Report': 1081}
+
+======================================================================
+emails  rows=100,000  cols=10
+======================================================================
+- email_id                     str              nulls=0       unique=100000   e.g. EML0000001
+- sender_employee_id           str              nulls=0       unique=5000     e.g. EMP003026
+- recipient_employee_id        str              nulls=0       unique=5000     e.g. EMP001685
+- cc_count                     int64            nulls=0       unique=9        e.g. 2
+- sent_at                      datetime64[ns]   nulls=0       unique=99814    e.g. 2022-11-07 14:02:50
+- subject                      str              nulls=0       unique=1956     e.g. Update on TKT0010287
+- body                         str              nulls=0       unique=77771    e.g. Hi Katrina,  Sharing a quick update on TKT0010287. The client confirmed the fix ...  [LONG TEXT, avg 116 chars]
+- related_case_id              str              nulls=80013   unique=18205    e.g. CS0064158
+- thread_id                    str              nulls=0       unique=31672    e.g. THR12534
+- has_attachment               bool             nulls=0       unique=2        e.g. False
+  values of cc_count: {1: 36139, 0: 29840, 2: 21768, 3: 8850, 4: 2615, 5: 641, 6: 119, 7: 25, 8: 3}
+  values of has_attachment: {False: 69930, True: 30070}
+
+======================================================================
+knowledge_article_versions  rows=30,170  cols=6
+======================================================================
+- article_version_id           str              nulls=0       unique=30170    e.g. KBV00000001
+- article_id                   str              nulls=0       unique=10040    e.g. KB000001
+- version_no                   int64            nulls=0       unique=6        e.g. 1
+- edited_at                    datetime64[ns]   nulls=0       unique=29162    e.g. 2019-09-13 14:57:11
+- edited_by_employee_id        str              nulls=0       unique=4983     e.g. EMP001046
+- change_summary               str              nulls=0       unique=7        e.g. Initial version
+  values of version_no: {1: 10040, 2: 8057, 3: 6038, 4: 4003, 5: 2022, 6: 10}
+  values of change_summary: {'Initial version': 10040, 'Added escalation path': 3414, 'Updated steps': 3382, 'Fixed screenshots': 3370, 'Minor wording changes': 3343, 'Updated for new release': 3328, 'Policy alignment': 3293}
+
+======================================================================
+knowledge_articles  rows=10,040  cols=17
+======================================================================
+- article_id                   str              nulls=0       unique=10040    e.g. KB000001
+- article_type                 str              nulls=0       unique=6        e.g. Policy
+- topic_key                    str              nulls=0       unique=28       e.g. request elevated access
+- division_id                  str              nulls=0       unique=5        e.g. DIV02
+- product_id                   str              nulls=5473    unique=120      e.g. PRD054
+- app_id                       str              nulls=0       unique=17       e.g. APP0013
+- title                        str              nulls=0       unique=10000    e.g. Policy: request elevated access (AccessHub)
+- owner_team_id                str              nulls=0       unique=120      e.g. TM0014
+- author_employee_id           str              nulls=0       unique=4331     e.g. EMP003864
+- created_at                   datetime64[ns]   nulls=0       unique=9978     e.g. 2019-09-13 14:57:11
+- last_reviewed_at             datetime64[ns]   nulls=0       unique=9092     e.g. 2020-09-05 20:25:47.416105767
+- status                       str              nulls=0       unique=3        e.g. Published
+- version                      int64            nulls=0       unique=6        e.g. 1
+- body                         str              nulls=0       unique=10036    e.g. Purpose: This article explains how to request elevated access. Applies to: Acces...  [LONG TEXT, avg 471 chars]
+- view_count                   int64            nulls=0       unique=1372     e.g. 13
+- helpful_votes                int64            nulls=0       unique=226      e.g. 0
+- tags                         str              nulls=0       unique=28       e.g. request, elevated, access
+  values of article_type: {'How-to': 2917, 'Troubleshooting': 2454, 'SOP': 1913, 'FAQ': 1231, 'Reference': 835, 'Policy': 690}
+  values of division_id: {'DIV05': 3961, 'DIV01': 1996, 'DIV02': 1554, 'DIV03': 1512, 'DIV04': 1017}
+  values of status: {'Published': 8619, 'Archived': 881, 'Draft': 540}
+  values of version: {3: 2035, 2: 2019, 5: 2012, 1: 1983, 4: 1981, 6: 10}
+
+======================================================================
+meetings  rows=12,000  cols=10
+======================================================================
+- meeting_id                   str              nulls=0       unique=12000    e.g. MTG000001
+- project_id                   str              nulls=4830    unique=3372     e.g. PRJ003970
+- team_id                      str              nulls=0       unique=120      e.g. TM0114
+- organizer_employee_id        str              nulls=0       unique=1017     e.g. EMP000326
+- meeting_type                 str              nulls=0       unique=9        e.g. Steering committee
+- title                        str              nulls=0       unique=6002     e.g. Steering committee - Horizon - Process Improvement 89
+- start_ts                     datetime64[ns]   nulls=0       unique=9451     e.g. 2023-04-17 10:21:26
+- duration_min                 int64            nulls=0       unique=5        e.g. 60
+- attendee_count               int64            nulls=0       unique=40       e.g. 12
+- transcript_summary           str              nulls=0       unique=7381     e.g. Retrospective for Horizon - Process Improvement 89. What went well: faster turna...  [LONG TEXT, avg 157 chars]
+  values of meeting_type: {'UAT review': 1455, 'Status sync': 1441, 'Design review': 1437, 'Retrospective': 1419, 'Steering committee': 1418, 'Weekly sync': 1255, 'Town hall': 1210, '1:1 (aggregate)': 1201, 'Team huddle': 1164}
+  values of duration_min: {30: 4788, 60: 3069, 15: 1835, 45: 1758, 90: 550}
+
+======================================================================
+search_logs  rows=200,000  cols=7
+======================================================================
+- search_id                    str              nulls=0       unique=200000   e.g. SRCH00000001
+- employee_id                  str              nulls=0       unique=5000     e.g. EMP004417
+- searched_at                  datetime64[ns]   nulls=0       unique=199340   e.g. 2024-09-27 18:00:04
+- query_text                   str              nulls=0       unique=907      e.g. fix broken DOI likns
+- results_count                int64            nulls=0       unique=83       e.g. 3
+- clicked_article_id           str              nulls=112417  unique=8619     e.g. KB008600
+- source                       str              nulls=0       unique=4        e.g. KB Portal
+  values of source: {'KB Portal': 89931, 'REPH Copilot': 49778, 'Intranet': 40456, 'Knowledge RAG Assistant': 19835}
+
+======================================================================
+sops  rows=600  cols=9
+======================================================================
+- sop_id                       str              nulls=0       unique=600      e.g. SOP00001
+- article_id                   str              nulls=0       unique=511      e.g. KB009159
+- process_id                   str              nulls=0       unique=40       e.g. PRC001
+- sop_title                    str              nulls=0       unique=510      e.g. SOP: publish an article to the content platform (LearnHub) #4
+- version                      int64            nulls=0       unique=6        e.g. 4
+- effective_date               datetime64[ns]   nulls=0       unique=460      e.g. 2024-07-26 00:00:00
+- review_due_date              datetime64[ns]   nulls=0       unique=430      e.g. 2026-02-13 00:00:00
+- is_current                   bool             nulls=0       unique=2        e.g. False
+- owner_employee_id            str              nulls=0       unique=572      e.g. EMP004502
+  values of version: {2: 137, 3: 131, 1: 115, 4: 111, 5: 104, 6: 2}
+  values of is_current: {False: 471, True: 129}
