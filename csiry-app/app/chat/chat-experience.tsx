@@ -46,7 +46,9 @@ export function ChatExperience() {
 
       <section className="chat-workspace" aria-labelledby="chat-title">
         <div className="chat-heading">
-          <h1 id="chat-title">Chat with Laplace</h1>
+          <h1 id="chat-title">
+            Chat with <span className="laplace-accent">Laplace</span>
+          </h1>
         </div>
 
         <div className="chat-panel">
@@ -62,7 +64,8 @@ export function ChatExperience() {
                 <div>
                   <p className="chat-message-label">LAPLACE</p>
                   <p className="chat-message-content">
-                    Hi, I&apos;m Laplace. Ask me anything about your
+                    Hi, I&apos;m <span className="laplace-accent">Laplace</span>.
+                    Ask me anything about your
                     company&apos;s knowledge, and I&apos;ll answer with sources.
                   </p>
                 </div>

@@ -14,7 +14,7 @@ export function SiteHeader({ activePage }: SiteHeaderProps) {
           <span />
           <span />
         </span>
-        <span>laplace</span>
+        <span className="laplace-accent">laplace</span>
       </Link>
 
       <nav className="main-nav" aria-label="Main navigation">

@@ -2,9 +2,11 @@
 
 :root {
   color-scheme: dark;
-  --background: #202120;
+  --background: #1e1e1e;
   --foreground: #f3f1eb;
   --muted: #a4a49e;
+  --particle-color: #EC6218;
+  --brand-accent: #E73418;
   --panel: #eeede8;
   --panel-foreground: #242522;
 }
@@ -25,10 +27,144 @@ html {
 }
 
 body {
+  position: relative;
+  isolation: isolate;
   margin: 0;
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.particle-field {
+  position: fixed;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.particle,
+.particle::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  background: transparent;
+}
+
+.particle {
+  animation: animate-particle 60s linear infinite;
+  width: 2px;
+  height: 2px;
+  opacity: 0.48;
+  box-shadow:
+    92px 61px var(--particle-color), 244px 218px var(--particle-color), 389px 103px var(--particle-color),
+    521px 304px var(--particle-color), 704px 170px var(--particle-color), 846px 72px var(--particle-color),
+    1008px 267px var(--particle-color), 1166px 123px var(--particle-color), 1327px 342px var(--particle-color),
+    1484px 199px var(--particle-color), 1633px 53px var(--particle-color), 1789px 293px var(--particle-color),
+    1957px 142px var(--particle-color), 2132px 375px var(--particle-color), 2319px 212px var(--particle-color),
+    2491px 91px var(--particle-color), 57px 489px var(--particle-color), 207px 647px var(--particle-color),
+    361px 438px var(--particle-color), 514px 756px var(--particle-color), 674px 553px var(--particle-color),
+    829px 689px var(--particle-color), 986px 471px var(--particle-color), 1141px 806px var(--particle-color),
+    1299px 592px var(--particle-color), 1457px 738px var(--particle-color), 1612px 462px var(--particle-color),
+    1768px 841px var(--particle-color), 1924px 622px var(--particle-color), 2080px 778px var(--particle-color),
+    2241px 517px var(--particle-color), 2396px 703px var(--particle-color), 2538px 588px var(--particle-color),
+    128px 962px var(--particle-color), 289px 1107px var(--particle-color), 443px 891px var(--particle-color),
+    601px 1226px var(--particle-color), 758px 1014px var(--particle-color), 918px 1170px var(--particle-color),
+    1073px 938px var(--particle-color), 1234px 1291px var(--particle-color), 1392px 1069px var(--particle-color),
+    1549px 1237px var(--particle-color), 1704px 991px var(--particle-color), 1861px 1335px var(--particle-color),
+    2017px 1114px var(--particle-color), 2176px 1273px var(--particle-color), 2334px 1041px var(--particle-color),
+    2497px 1212px var(--particle-color), 79px 1517px var(--particle-color), 236px 1694px var(--particle-color),
+    394px 1479px var(--particle-color), 551px 1808px var(--particle-color), 709px 1595px var(--particle-color),
+    867px 1751px var(--particle-color), 1024px 1527px var(--particle-color), 1182px 1886px var(--particle-color),
+    1340px 1660px var(--particle-color), 1497px 1821px var(--particle-color), 1655px 1579px var(--particle-color),
+    1812px 1952px var(--particle-color), 1970px 1726px var(--particle-color), 2128px 1882px var(--particle-color),
+    2286px 1643px var(--particle-color), 2444px 1811px var(--particle-color), 163px 2115px var(--particle-color),
+    321px 2306px var(--particle-color), 479px 2072px var(--particle-color), 637px 2419px var(--particle-color),
+    795px 2197px var(--particle-color), 953px 2354px var(--particle-color), 1111px 2130px var(--particle-color),
+    1269px 2480px var(--particle-color), 1427px 2248px var(--particle-color), 1585px 2406px var(--particle-color),
+    1743px 2168px var(--particle-color), 1901px 2521px var(--particle-color), 2059px 2294px var(--particle-color),
+    2217px 2450px var(--particle-color), 2375px 2218px var(--particle-color), 2533px 2382px var(--particle-color),
+    47px 317px var(--particle-color), 1247px 889px var(--particle-color), 2433px 1511px var(--particle-color);
+}
+
+.particle::after {
+  top: 2560px;
+  width: inherit;
+  height: inherit;
+  content: "";
+  box-shadow: inherit;
+}
+
+.particle-2 {
+  width: 2px;
+  height: 2px;
+  opacity: 0.34;
+  animation-duration: 120s;
+  box-shadow:
+    171px 173px var(--particle-color), 433px 82px var(--particle-color), 679px 338px var(--particle-color),
+    922px 207px var(--particle-color), 1190px 57px var(--particle-color), 1435px 371px var(--particle-color),
+    1691px 151px var(--particle-color), 1954px 329px var(--particle-color), 2210px 105px var(--particle-color),
+    2472px 284px var(--particle-color), 68px 621px var(--particle-color), 326px 826px var(--particle-color),
+    584px 574px var(--particle-color), 841px 909px var(--particle-color), 1098px 689px var(--particle-color),
+    1357px 954px var(--particle-color), 1613px 724px var(--particle-color), 1871px 1011px var(--particle-color),
+    2128px 781px var(--particle-color), 2386px 1077px var(--particle-color), 192px 1244px var(--particle-color),
+    450px 1458px var(--particle-color), 707px 1201px var(--particle-color), 966px 1539px var(--particle-color),
+    1223px 1308px var(--particle-color), 1481px 1596px var(--particle-color), 1739px 1362px var(--particle-color),
+    1997px 1654px var(--particle-color), 2255px 1418px var(--particle-color), 2513px 1701px var(--particle-color),
+    113px 1876px var(--particle-color), 370px 2110px var(--particle-color), 629px 1857px var(--particle-color),
+    887px 2192px var(--particle-color), 1145px 1963px var(--particle-color), 1403px 2248px var(--particle-color),
+    1661px 2019px var(--particle-color), 1919px 2307px var(--particle-color), 2177px 2074px var(--particle-color),
+    2435px 2361px var(--particle-color);
+}
+
+.particle-3 {
+  width: 3px;
+  height: 3px;
+  opacity: 0.28;
+  animation-duration: 180s;
+  box-shadow:
+    314px 257px var(--particle-color), 786px 448px var(--particle-color), 1262px 294px var(--particle-color),
+    1741px 504px var(--particle-color), 2218px 336px var(--particle-color), 93px 883px var(--particle-color),
+    566px 1062px var(--particle-color), 1044px 847px var(--particle-color), 1520px 1118px var(--particle-color),
+    1997px 922px var(--particle-color), 2474px 1186px var(--particle-color), 328px 1482px var(--particle-color),
+    805px 1297px var(--particle-color), 1283px 1551px var(--particle-color), 1760px 1356px var(--particle-color),
+    2237px 1623px var(--particle-color), 112px 1902px var(--particle-color), 589px 1719px var(--particle-color),
+    1067px 1978px var(--particle-color), 1545px 1776px var(--particle-color), 2022px 2047px var(--particle-color),
+    2499px 1841px var(--particle-color), 350px 2265px var(--particle-color), 827px 2084px var(--particle-color),
+    1305px 2341px var(--particle-color), 1782px 2137px var(--particle-color), 2260px 2411px var(--particle-color);
+}
+
+.particle-4 {
+  width: 1px;
+  height: 1px;
+  opacity: 0.56;
+  animation-duration: 200s;
+  box-shadow:
+    35px 321px var(--particle-color), 277px 127px var(--particle-color), 492px 512px var(--particle-color),
+    742px 399px var(--particle-color), 973px 184px var(--particle-color), 1218px 541px var(--particle-color),
+    1461px 276px var(--particle-color), 1707px 483px var(--particle-color), 1949px 228px var(--particle-color),
+    2194px 576px var(--particle-color), 2440px 361px var(--particle-color), 153px 779px var(--particle-color),
+    397px 1046px var(--particle-color), 641px 821px var(--particle-color), 886px 1136px var(--particle-color),
+    1129px 876px var(--particle-color), 1374px 1192px var(--particle-color), 1618px 964px var(--particle-color),
+    1863px 1261px var(--particle-color), 2107px 1013px var(--particle-color), 2352px 1328px var(--particle-color),
+    104px 1516px var(--particle-color), 348px 1781px var(--particle-color), 593px 1544px var(--particle-color),
+    837px 1854px var(--particle-color), 1081px 1615px var(--particle-color), 1326px 1912px var(--particle-color),
+    1570px 1666px var(--particle-color), 1815px 1979px var(--particle-color), 2059px 1734px var(--particle-color),
+    2304px 2048px var(--particle-color), 52px 2204px var(--particle-color), 297px 2464px var(--particle-color),
+    540px 2228px var(--particle-color), 785px 2510px var(--particle-color), 1029px 2271px var(--particle-color),
+    1274px 2540px var(--particle-color), 1518px 2305px var(--particle-color), 1763px 2491px var(--particle-color),
+    2007px 2257px var(--particle-color), 2252px 2471px var(--particle-color), 2496px 2288px var(--particle-color);
+}
+
+@keyframes animate-particle {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-2560px);
+  }
 }
 
 a {
@@ -43,11 +179,13 @@ summary:focus-visible {
 }
 
 .home {
+  position: relative;
+  z-index: 1;
   min-height: 100vh;
   overflow: hidden;
   background:
     radial-gradient(ellipse at 50% 34%, rgb(255 255 255 / 4%), transparent 38%),
-    var(--background);
+    transparent;
 }
 
 .site-header {
@@ -68,6 +206,12 @@ summary:focus-visible {
   font-size: 20px;
   font-weight: 600;
   letter-spacing: -0.06em;
+}
+
+.brand,
+.footer-brand,
+.laplace-accent {
+  color: var(--brand-accent);
 }
 
 .brand-mark {
@@ -96,7 +240,7 @@ summary:focus-visible {
   padding: 5px;
   border: 1px solid rgb(255 255 255 / 9%);
   border-radius: 999px;
-  background: rgb(255 255 255 / 4%);
+  background: #292a28;
 }
 
 .nav-link {
@@ -138,6 +282,10 @@ summary:focus-visible {
   font-style: italic;
   font-weight: 400;
   letter-spacing: -0.035em;
+}
+
+.hero h1 .laplace-accent {
+  color: var(--brand-accent);
 }
 
 .hero-copy {
@@ -234,7 +382,7 @@ summary:focus-visible {
 }
 
 .footer-brand {
-  color: var(--foreground);
+  color: var(--brand-accent);
   font-size: 14px;
 }
 
@@ -244,6 +392,7 @@ summary:focus-visible {
 
 .chat-page {
   position: fixed;
+  z-index: 1;
   inset: 0;
   height: 100vh;
   height: 100dvh;
@@ -252,7 +401,7 @@ summary:focus-visible {
   overflow: hidden;
   background:
     radial-gradient(ellipse at 50% 24%, rgb(255 255 255 / 4%), transparent 38%),
-    var(--background);
+    transparent;
 }
 
 .chat-page .site-header {
@@ -292,7 +441,7 @@ summary:focus-visible {
   flex-direction: column;
   border: 1px solid rgb(255 255 255 / 10%);
   border-radius: 18px;
-  background: rgb(255 255 255 / 3%);
+  background: var(--background);
   box-shadow: 0 22px 70px rgb(0 0 0 / 12%);
 }
 
@@ -434,7 +583,8 @@ summary:focus-visible {
 }
 
 .chat-composer textarea::placeholder {
-  color: #85867f;
+  color: #242522;
+  font-style: italic;
   opacity: 1;
 }
 
@@ -577,6 +727,10 @@ summary:focus-visible {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .particle {
+    animation: none;
+  }
+
   *,
   *::before,
   *::after {
