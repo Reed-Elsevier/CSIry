@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { SiteHeader } from "../components/site-header";
+import { Markdown } from "./simple-markdown";
 
 type Message = {
   id: string;
@@ -23,7 +24,7 @@ function extractReply(data: unknown): string {
   if (typeof data === "string") return data;
   if (data && typeof data === "object") {
     const record = data as Record<string, unknown>;
-    for (const key of ["response", "answer", "reply", "message", "content"]) {
+    for (const key of ["reply", "response", "answer", "message", "content"]) {
       if (typeof record[key] === "string") return record[key] as string;
     }
   }
@@ -51,6 +52,20 @@ async function requestChat(
   }
 
   return extractReply(await response.json());
+}
+
+// Assistant replies are markdown (headings, lists, bold, blockquotes, rules).
+// User messages stay plain text.
+function MessageContent({ message }: { message: Message }) {
+  if (message.role === "user") {
+    return <div className="chat-message-content chat-plain">{message.content}</div>;
+  }
+
+  return (
+    <div className="chat-message-content chat-markdown">
+      <Markdown content={message.content} />
+    </div>
+  );
 }
 
 export function ChatExperience() {
@@ -144,7 +159,7 @@ export function ChatExperience() {
                     <p className="chat-message-label">
                       {message.role === "assistant" ? "LAPLACE" : "YOU"}
                     </p>
-                    <p className="chat-message-content">{message.content}</p>
+                    <MessageContent message={message} />
                   </div>
                 </div>
               ))
