@@ -10,8 +10,7 @@ type Message = {
   content: string;
 };
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://15.135.72.99:8000";
-
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "/backend";
 const suggestions = [
   "How do I process a vendor onboarding request?",
   "Which searches returned no results this month?",
